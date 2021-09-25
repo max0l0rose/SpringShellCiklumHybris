@@ -1,17 +1,19 @@
 package com.company;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import sun.reflect.annotation.TypeNotPresentExceptionProxy;
 
-import javax.persistence.EntityManager;
 
+@SpringBootApplication()
 public class Main {
 
-    @Autowired
-    private EntityManager entityManager;
+//    @Autowired
+//    private EntityManager entityManager;
 
     public static void main(String[] args) {
         System.out.println("1");
@@ -19,9 +21,6 @@ public class Main {
         System.out.println("2");
     }
 }
-
-
-22222222222
 
 
 @ShellComponent
