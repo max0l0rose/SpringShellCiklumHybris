@@ -3,10 +3,10 @@ package com.company.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,16 +15,15 @@ import javax.validation.constraints.NotNull;
 //@Getter
 //@Setter
 @SequenceGenerator(name = "sequenceGen", sequenceName = "seqProduct", allocationSize = 1, initialValue = 1)
+@Table(name = "Products")
 public class Product extends BaseEntity implements StringsArray {
 
 	public final static String[][] headers = {{"Id", "ProdName", "Department", "Role", "Created", "Modified" },};
 
 	@NotNull
 	@Column(length = 100, columnDefinition = "varchar(50) default 'Shampoo'") // ;)
-	@Order(2)
 	String name;
 
-	@Order(3)
 	int price;
 
 //	@OneToOne
@@ -35,6 +34,14 @@ public class Product extends BaseEntity implements StringsArray {
 	//@Enumerated
 	ProdStatus status;
 
+	@ManyToMany(
+			//mappedBy = "product"
+	)
+	@JoinTable(name = "order_items",
+			joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
+			inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")}
+	)
+	List<Order> orders;
 
 	public String[] toStringsArray() {
 		return new String[] {

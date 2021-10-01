@@ -5,10 +5,8 @@ import com.company.model.Product;
 import com.company.repo.ProdRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 
@@ -38,7 +36,7 @@ public class Main {
 		//{
 		log.info("demo: ");
 
-			Product dep = new Product("Prod1", 0, ProdStatus.IN_STOCK);
+			Product dep = new Product("Prod1", 10, ProdStatus.IN_STOCK, null);
             repository.save(dep);
 
 //			dep.setDepName(dep.getDepName() + dep.getId());

@@ -28,17 +28,14 @@ public class BaseEntity implements StringsArray {
 	int version;
 
 	//@Temporal(TemporalType.TIMESTAMP) // ERROR
-	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP",
+	@Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP",
 			updatable = false, insertable = false)
-	@Order(10)
-	//@Basic
 	//@CreationTimestamp // hibernate
 	//@Transient
 	Instant created;
 
 	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
 			updatable = false, insertable = false)
-	@Order(11)
 	//@Temporal(TemporalType.TIMESTAMP) // ERROR
 	//@UpdateTimestamp // hibernate
 	Instant modified; //LocalDateTime
