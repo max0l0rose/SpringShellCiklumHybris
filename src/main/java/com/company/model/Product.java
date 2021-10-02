@@ -34,14 +34,15 @@ public class Product extends BaseEntity implements StringsArray {
 	//@Enumerated
 	ProdStatus status;
 
-	@ManyToMany(
-			//mappedBy = "product"
-	)
+
+	@ManyToMany(//mappedBy = "products"
+	           )
 	@JoinTable(name = "order_items",
 			joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")}
 	)
 	List<Order> orders;
+
 
 	public String[] toStringsArray() {
 		return new String[] {

@@ -31,7 +31,7 @@ public class Order extends BaseEntity
 
 	ProdStatus status;
 
-	@ManyToMany(//mappedBy = "roles",
+	@ManyToMany(//mappedBy = "orders"
 			//fetch = FetchType.LAZY
 	)
 	@JoinTable(name = "order_items",

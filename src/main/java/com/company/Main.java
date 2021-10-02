@@ -1,14 +1,19 @@
 package com.company;
 
+import com.company.model.Order;
 import com.company.model.ProdStatus;
 import com.company.model.Product;
-import com.company.repo.ProdRepository;
+import com.company.repo.OrdersRepo;
+import com.company.repo.ProdRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SpringBootApplication(
@@ -31,46 +36,27 @@ public class Main {
     	//CommandLineRunner
 	@Bean
 	//@Transactional
-    public boolean demo(ProdRepository repository) {
+    public boolean demo(ProdRepo prodRepo, OrdersRepo ordersRepo) {
 		//return (args) ->
 		//{
 		log.info("demo: ");
 
-			Product dep = new Product("Prod1", 10, ProdStatus.IN_STOCK, null);
-            repository.save(dep);
+		Product prod1 = new Product("Prod1", 10, ProdStatus.IN_STOCK, null);
+        prodRepo.save(prod1);
+		Product prod2 = new Product("Prod2", 20, ProdStatus.IN_STOCK, null);
+		prodRepo.save(prod2);
 
-//			dep.setDepName(dep.getDepName() + dep.getId());
-//			depsRepo.save(dep);
-//			//entityManager.merge(dep);
-//
-//			User user = new User("Jack", dep, Role.ADMIN);
-//			repository.save(user);
-//			// fetch all customers
+		Order order1 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
+			add(prod1); add(prod2);
+		}});
+		ordersRepo.save(order1);
 
-//			log.info("Customers found with findAll():");
-//			log.info("-------------------------------");
-//			for (Customer customer : repository.findAll()) {
-//				log.info(customer.toString());
-//			}
-//			log.info("");
-//
-//			// fetch an individual customer by ID
-//			Customer customer = repository.findById(1L);
-//			log.info("Customer found with findById(1L):");
-//			log.info("--------------------------------");
-//			log.info(customer.toString());
-//			log.info("");
-//
-//			// fetch customers by last name
-//			log.info("Customer found with findByLastName('Bauer'):");
-//			log.info("--------------------------------------------");
-//			repository.findByLastName("Bauer").forEach(bauer -> {
-//				log.info(bauer.toString());
-//			});
-//			// for (Customer bauer : repository.findByLastName("Bauer")) {
-//			//  log.info(bauer.toString());
-//			// }
-			log.info("demo: Ok");
+		Order order2 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
+			add(prod2);
+		}});
+		ordersRepo.save(order2);
+
+		log.info("demo: Ok");
 		//};
 		return  true;
 	}

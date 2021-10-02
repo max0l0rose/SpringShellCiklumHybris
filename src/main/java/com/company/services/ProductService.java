@@ -1,7 +1,7 @@
 package com.company.services;
 
 import com.company.model.Product;
-import com.company.repo.ProdRepository;
+import com.company.repo.ProdRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class ProductService implements MyService<Product>{
 //	private static Connection conn;
 
 	@Autowired
-	private ProdRepository prodRepository;
+	private ProdRepo prodRepository;
 
 
 ////	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
