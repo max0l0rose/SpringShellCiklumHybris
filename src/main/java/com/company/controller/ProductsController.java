@@ -6,14 +6,15 @@ import com.company.view.ProductsView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@ShellComponent
-public class UsersController
+@ShellComponent()
+public class ProductsController
 		//extends SecuredCommand
 {
 	private final Map<String,Object> session = new HashMap<>();
@@ -22,7 +23,24 @@ public class UsersController
 	private ProductService productService;
 
 
-	@ShellMethod(key = {"products", "prods", "ps"}, value = "Show products.")
+	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
+	public String commandProductsByOrderId(
+			//@Size(min = 5, max = 40)
+			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
+					int oid
+	)
+	{
+		Model model = new ExtendedModelMap();
+
+		Iterable<Product> users = productService.findByOrdersId(oid);
+		model.addAttribute("list", users);
+
+		return ProductsView.render(model);
+	}
+
+
+
+	@ShellMethod(key = {"products", "prods", "ps"}, value = "Show all products.")
 	public String commandProducts (
 //			@Size(min = 5, max = 40)
 //			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
@@ -40,7 +58,7 @@ public class UsersController
 //				.map(u -> u.toStringsArray() )
 //				.toArray(size -> new Object[size][]);
 //
-//		//StringsArray sa = u;
+//		//StringsArray sa = u;os
 //		//sampleData[1] = u.toStringsArray();
 
 		Model model = new ExtendedModelMap();

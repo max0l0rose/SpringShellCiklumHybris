@@ -25,7 +25,7 @@ import java.util.List;
 @Table(name = "Orders")
 public class Order extends BaseEntity
 {
-	public final static String[][] headers = {{"Id", "DepName", "Created", "Modified" },};
+	public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
 
 	private long user_id;
 
@@ -53,8 +53,8 @@ public class Order extends BaseEntity
 				       + id +
 				       ", user_id=" + user_id +
 				       ", status=" + status +
-				       ", modified=" + modified +
 				       ", created=" + created +
+				       ", modified=" + modified +
 				       '}';
 	}
 
