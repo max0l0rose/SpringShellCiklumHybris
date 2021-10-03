@@ -5,6 +5,7 @@ import com.company.repo.ProdRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -72,6 +73,12 @@ public class ProductService implements MyService<Product>{
 //		}
 //		return list;
 	}
+
+
+	public List<Product> findByOrdersId(long orderId) {
+		return prodRepository.findByOrdersId(orderId);
+	}
+
 
 
 	public Optional<Product> show(long id) {

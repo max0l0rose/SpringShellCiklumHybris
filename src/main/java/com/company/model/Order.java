@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 //@Getter
 //@Setter
@@ -25,20 +25,40 @@ import java.util.List;
 @Table(name = "Orders")
 public class Order extends BaseEntity
 {
-	public final static String[][] headers = {{"Id", "DepName", "Created", "Modified" },};
+	public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
 
+	//@GeneratedValue//(strategy = GenerationType.IDENTITY)
 	private long user_id;
 
 	ProdStatus status;
 
-	@ManyToMany(//mappedBy = "orders"
+
+	public Order(ProdStatus status) {
+		this.status = status;
+	}
+
+
+
+	@OneToMany(mappedBy = "orderId"
 			//fetch = FetchType.LAZY
 	)
-	@JoinTable(name = "order_items",
-			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
-	)
-	private List<Product> products;
+//	@JoinColumn(name = "order_id")
+//	@JoinTable(name = "order_items",
+//			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
+//	)
+	private List<OrderItems> products;
+
+
+//	@ManyToMany(//mappedBy = "orders"
+//			//fetch = FetchType.LAZY
+//	)
+//	@JoinTable(name = "order_items",
+//			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
+//	)
+//	private List<Product> products;
+
 
 
 	public String[] toStringsArray() {
@@ -53,8 +73,8 @@ public class Order extends BaseEntity
 				       + id +
 				       ", user_id=" + user_id +
 				       ", status=" + status +
-				       ", modified=" + modified +
 				       ", created=" + created +
+				       ", modified=" + modified +
 				       '}';
 	}
 

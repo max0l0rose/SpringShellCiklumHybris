@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 //@Getter
 //@Setter
 @SequenceGenerator(name = "sequenceGen", sequenceName = "seqProduct", allocationSize = 1, initialValue = 1)
@@ -35,13 +35,29 @@ public class Product extends BaseEntity implements StringsArray {
 	ProdStatus status;
 
 
-	@ManyToMany(//mappedBy = "products"
-	           )
-	@JoinTable(name = "order_items",
-			joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")}
+	public Product(String name, int price, ProdStatus status) {
+		this.name = name;
+		this.price = price;
+		this.status = status;
+	}
+
+	@OneToMany(mappedBy = "orderId"
+			//fetch = FetchType.LAZY
 	)
-	List<Order> orders;
+//	@JoinColumn(name = "order_id")
+//	@JoinTable(name = "order_items",
+//			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
+//	)
+	private List<OrderItems> orders;// = new HashSet<OrderItems>();;
+
+//	@ManyToMany(//mappedBy = "products"
+//	           )
+//	@JoinTable(name = "order_items",
+//			joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
+//			inverseJoinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")}
+//	)
+//	List<Order> orders;
 
 
 	public String[] toStringsArray() {

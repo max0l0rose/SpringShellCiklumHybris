@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.model.Order;
+import com.company.model.OrderItems;
 import com.company.model.ProdStatus;
 import com.company.model.Product;
 import com.company.repo.OrdersRepo;
@@ -41,22 +42,26 @@ public class Main {
 		//{
 		log.info("demo: ");
 
-		Product prod1 = new Product("Prod1", 10, ProdStatus.IN_STOCK, null);
+		Product prod1 = new Product("Prod1", 10, ProdStatus.IN_STOCK);
         prodRepo.save(prod1);
-		Product prod2 = new Product("Prod2", 20, ProdStatus.IN_STOCK, null);
+		Product prod2 = new Product("Prod2", 20, ProdStatus.IN_STOCK);
 		prodRepo.save(prod2);
 
-		Order order1 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
-			add(prod1); add(prod2);
-		}});
-		ordersRepo.save(order1);
-
-		Order order2 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
-			add(prod2);
-		}});
-		ordersRepo.save(order2);
-
-		log.info("demo: Ok");
+//		ArrayList<OrderItems> orderItems = new ArrayList<>() {{
+//			add(new OrderItems())
+//		}};
+//
+//		Order order1 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
+//			add(prod1); add(prod2);
+//		}});
+//		ordersRepo.save(order1);
+//
+//		Order order2 = new Order(0, ProdStatus.IN_STOCK, new ArrayList<Product>() {{
+//			add(prod2);
+//		}});
+//		ordersRepo.save(order2);
+//
+//		log.info("demo: Ok");
 		//};
 		return  true;
 	}
