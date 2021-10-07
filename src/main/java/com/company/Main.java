@@ -16,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.ArrayList;
 import java.util.List;
 
+// https://github.com/maxanarki2/SpringShellTest
 
 @SpringBootApplication(
 //		exclude={DataSourceAutoConfiguration.class}
