@@ -23,20 +23,20 @@ public class ProductsController
 	private ProductService productService;
 
 
-	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
-	public String commandProductsByOrderId(
-			//@Size(min = 5, max = 40)
-			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
-					int oid
-	)
-	{
-		Model model = new ExtendedModelMap();
-
-		Iterable<Product> users = productService.findByOrdersId(oid);
-		model.addAttribute("list", users);
-
-		return ProductsView.render(model);
-	}
+//	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
+//	public String commandProductsByOrderId(
+//			//@Size(min = 5, max = 40)
+//			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
+//					int oid
+//	)
+//	{
+//		Model model = new ExtendedModelMap();
+//
+//		Iterable<Product> users = productService.findByOrdersId(oid);
+//		model.addAttribute("list", users);
+//
+//		return ProductsView.render(model);
+//	}
 
 
 

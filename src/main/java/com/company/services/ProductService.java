@@ -1,6 +1,7 @@
 package com.company.services;
 
 import com.company.model.Product;
+import com.company.repo.OrderItemsRepo;
 import com.company.repo.ProdRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ public class ProductService implements MyService<Product>{
 	@Autowired
 	private ProdRepo prodRepository;
 
+	@Autowired
+	OrderItemsRepo orderItemsRepo;
 
 ////	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 ////	static final String JDBC_DB_URL = "jdbc:mysql://localhost:3306/tutorialDb";
@@ -75,9 +78,9 @@ public class ProductService implements MyService<Product>{
 	}
 
 
-	public List<Product> findByOrdersId(long orderId) {
-		return prodRepository.findByOrdersId(orderId);
-	}
+//	public List<Product> findByOrdersId(long orderId) {
+//		return prodRepository.findByOrdersId(orderId);
+//	}
 
 
 

@@ -11,11 +11,13 @@ import java.util.List;
 @Entity
 @Data
 //@AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 //@Getter
 //@Setter
 @SequenceGenerator(name = "sequenceGen", sequenceName = "seqProduct", allocationSize = 1, initialValue = 1)
-@Table(name = "Products")
+@Table(
+//		name = "Products"
+)
 public class Product extends BaseEntity implements StringsArray {
 
 	public final static String[][] headers = {{"Id", "ProdName", "Department", "Role", "Created", "Modified" },};
@@ -41,15 +43,19 @@ public class Product extends BaseEntity implements StringsArray {
 		this.status = status;
 	}
 
-	@OneToMany(mappedBy = "orderId"
+	@OneToMany(mappedBy = "productId",
 			//fetch = FetchType.LAZY
+			cascade = CascadeType.ALL//, orphanRemoval = true
 	)
-//	@JoinColumn(name = "order_id")
+//	@JoinColumn(
+//			name = "product_id"
+//	//		, referencedColumnName = "id"
+//	)
 //	@JoinTable(name = "order_items",
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)
-	private List<OrderItems> orders;// = new HashSet<OrderItems>();;
+	private List<OrderItems> orderItems;// = new HashSet<OrderItems>();
 
 //	@ManyToMany(//mappedBy = "products"
 //	           )

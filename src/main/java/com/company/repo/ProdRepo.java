@@ -12,7 +12,7 @@ public interface ProdRepo extends //Repository<User, Long>
 {
 	List<Product> findByName(String name);
 
-	List<Product> findByOrdersId(long orderId);
+	//List<Product> findByOrdersId(long orderId);
 
 	//User findById(long id);
 

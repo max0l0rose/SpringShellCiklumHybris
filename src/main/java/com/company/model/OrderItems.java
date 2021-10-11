@@ -1,12 +1,9 @@
 package com.company.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 //@TableGenerator(name="DepTableGen",
 //		table = "sequences",
@@ -22,21 +19,73 @@ import java.util.List;
 //@Getter
 //@Setter
 //@SequenceGenerator(name = "sequenceGen", sequenceName = "seqDepart", allocationSize = 1)
-//@Table(name = "Orders")
-public class OrderItems implements Serializable
+@Table(
+//		name = "order_items"
+)
+@IdClass(OrderProductPK.class)
+public class OrderItems
+		//implements Serializable
 		//extends BaseEntity
 {
 	//public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
 
-	@Id
-	private long orderId;
-
+//	@Column(name = "product_id"
+////			, insertable = false, updatable = false
+//	)
 	@Id
 	private long productId;
 
+//	@Column(name = "order_id"
+////			, insertable = false, updatable = false
+//	)
+	@Id
+	private long orderId;
+
+
+//	public OrderItems(Product product, Order1 order, int quantity) {
+//		this.product = product;
+//		this.order = order;
+//		this.quantity = quantity;
+//	}
+
+
+//	//@Access(AccessType.PROPERTY)
+//	@ManyToOne
+//	//@JoinColumn(name = "product", referencedColumnName = "id", nullable = false)
+//	@Id
+//	private Product product;
+//
+////	public Product getProduct() {
+////		return product;
+////	}
+////
+////	public void setProduct(Product product) {
+////		this.product = product;
+////	}
+//
+//
+//	//@Access(AccessType.PROPERTY)
+//	@ManyToOne
+//	//@JoinColumn(name = "order1", referencedColumnName = "id", nullable = false)
+//	@Id
+//	private Order1 order;
+//
+////	public Order1 getOrder() {
+////		return order;
+////	}
+////
+////	public void setOrder(Order1 order) {
+////		this.order = order;
+////	}
+
+
+
+	@Basic
+	//@Column(name = "quantity")
 	private int quantity;
 
-//	@ManyToMany(//mappedBy = "orders"
+
+	//	@ManyToMany(//mappedBy = "orders"
 //			//fetch = FetchType.LAZY
 //	)
 //	@JoinTable(name = "order_items",
@@ -44,6 +93,7 @@ public class OrderItems implements Serializable
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)
 //	private List<Product> products;
+
 
 
 //	public String[] toStringsArray() {

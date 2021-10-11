@@ -22,32 +22,37 @@ import java.util.List;
 //		pkColumnValue="LICENSE_ID" // Specify the primary key column value that would be considered as a primary key generator
 ////		,allocationSize=1
 //)
-@Table(name = "Orders")
-public class Order extends BaseEntity
+@Table(
+//		name = "Orders"
+)
+public class Order1 extends BaseEntity
 {
 	public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
 
 	//@GeneratedValue//(strategy = GenerationType.IDENTITY)
-	private long user_id;
+	private long userId;
 
-	ProdStatus status;
+	ProdStatus status = ProdStatus.IN_STOCK;
 
 
-	public Order(ProdStatus status) {
+	public Order1(ProdStatus status) {
 		this.status = status;
 	}
 
 
 
-	@OneToMany(mappedBy = "orderId"
+	@OneToMany(//mappedBy = "orderId"
 			//fetch = FetchType.LAZY
+			cascade = CascadeType.ALL
 	)
-//	@JoinColumn(name = "order_id")
+	@JoinColumn(
+			name = "order_id"
+	)
 //	@JoinTable(name = "order_items",
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)
-	private List<OrderItems> products;
+	private List<OrderItems> orderItems;
 
 
 //	@ManyToMany(//mappedBy = "orders"
@@ -62,7 +67,7 @@ public class Order extends BaseEntity
 
 
 	public String[] toStringsArray() {
-		return new String[] {String.valueOf(id), String.valueOf(user_id), String.valueOf(status),
+		return new String[] {String.valueOf(id), String.valueOf(userId), String.valueOf(status),
 				String.valueOf(created), String.valueOf(modified)};
 	}
 
@@ -71,7 +76,7 @@ public class Order extends BaseEntity
 	public String toString() {
 		return "Order{"
 				       + id +
-				       ", user_id=" + user_id +
+				       ", user_id=" + userId +
 				       ", status=" + status +
 				       ", created=" + created +
 				       ", modified=" + modified +

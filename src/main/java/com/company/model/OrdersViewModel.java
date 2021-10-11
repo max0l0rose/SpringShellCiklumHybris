@@ -4,14 +4,14 @@ public interface OrdersViewModel extends StringsArray
 {
 	String[][] headers = {{"Id", "UserId", "Status", "ProductsCount", "ProductsTotalPrice", "Created", "Modified" },}; //public final static
 
-	Order getOrder();
+	Order1 getOrder();
 	int getProdsCount();
 	int getProdsTotalPrice();
 
 	default String[] toStringsArray() {
-		Order order = getOrder();
+		Order1 order = getOrder();
 		return new String[] {
-				String.valueOf(order.getId()), String.valueOf(order.getUser_id()),
+				String.valueOf(order.getId()), String.valueOf(order.getUserId()),
 				String.valueOf(order.getStatus()),
 				String.valueOf(getProdsCount()),
 				String.valueOf(getProdsTotalPrice()),

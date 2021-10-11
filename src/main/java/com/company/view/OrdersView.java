@@ -1,6 +1,5 @@
 package com.company.view;
 
-import com.company.model.Order;
 import com.company.model.OrdersViewModel;
 import org.springframework.ui.Model;
 
