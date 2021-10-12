@@ -41,12 +41,13 @@ public class Order1 extends BaseEntity
 
 
 
-	@OneToMany(//mappedBy = "orderId"
+	@OneToMany(//mappedBy = "orderId",
 			//fetch = FetchType.LAZY
-			cascade = CascadeType.ALL
+			cascade = CascadeType.ALL, orphanRemoval = true
 	)
 	@JoinColumn(
 			name = "order_id"
+			//, referencedColumnName = "id"
 	)
 //	@JoinTable(name = "order_items",
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},

@@ -1,13 +1,13 @@
 package com.company.view;
 
-import com.company.model.OrdersViewModel;
+import com.company.model.Product;
 import org.springframework.ui.Model;
 
-public class OrdersView implements IView {
+public interface ProductsFindAllView extends IView {
 
 	//@Override
 	static public String render(Model model) {
-		model.addAttribute("headers", OrdersViewModel.headers);
+		model.addAttribute("headers", Product.headers);
 		return IView.render(model);
 	}
 

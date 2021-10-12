@@ -10,7 +10,9 @@ import java.time.Instant;
 //@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @MappedSuperclass
-public abstract class BaseEntity implements StringsArray {
+public abstract class BaseEntity
+		implements StringsArray
+{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "sequenceGen")

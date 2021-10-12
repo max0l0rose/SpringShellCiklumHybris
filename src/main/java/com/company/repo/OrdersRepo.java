@@ -1,20 +1,26 @@
 package com.company.repo;
 
 import com.company.model.Order1;
-import org.springframework.data.repository.CrudRepository;
+import com.company.view.OrdersFindAllView;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 //import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 //@Lazy
 public interface OrdersRepo extends
-		CrudRepository<Order1, Long>
+					JpaRepository<Order1, Long>
 					//PagingAndSortingRepository<Order, Long>
 {
 	//List<OrdersView> findById(String uname);
 	//Department findById(long id);
 
-	//@Query("select o as order, o.products.size as prodsCount, SUM (p.price) as prodsTotalPrice from Order o join o.products p group by o.id")
-	//List<OrdersViewModel> getView();
+	@Query("select o as order, o.orderItems.size as prodsCount, SUM (p.price) as prodsTotalPrice \n" +
+			       "from Order1 o\n" +
+			       "join o.orderItems oi \n" +
+			       "join Product p on p.id = oi.productId\n" +
+			       "group by o.id")
+	Iterable<OrdersFindAllView> getAllOrdersView();
 }
 
 

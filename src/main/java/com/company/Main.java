@@ -58,7 +58,7 @@ public class Main {
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
 		ordersService.save(order);
 
-		Product prod1 = new Product("Prod1", 100, ProdStatus.IN_STOCK);
+		Product prod1 = new Product("Prod2", 100, ProdStatus.IN_STOCK);
 		prodRepo.save(prod1);
 
 		OrderItems orderItems = new OrderItems(prod1.getId(), order.getId(), 10);
@@ -81,7 +81,7 @@ public class Main {
 	}
 
 
-	Product prod2 = new Product("Prod2", 200, ProdStatus.IN_STOCK);
+	Product prod2 = new Product("Prod1", 200, ProdStatus.IN_STOCK);
 
 	//CommandLineRunner
 	@Bean

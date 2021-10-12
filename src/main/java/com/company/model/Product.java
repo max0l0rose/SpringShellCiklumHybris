@@ -18,9 +18,11 @@ import java.util.List;
 @Table(
 //		name = "Products"
 )
-public class Product extends BaseEntity implements StringsArray {
+public class Product extends BaseEntity
+//		implements StringsArray
+{
 
-	public final static String[][] headers = {{"Id", "ProdName", "Department", "Role", "Created", "Modified" },};
+	public final static String[][] headers = {{"Id", "ProdName", "Price", "Status", "Created", "Modified" },};
 
 	@NotNull
 	@Column(length = 100, columnDefinition = "varchar(50) default 'Shampoo'") // ;)
@@ -45,7 +47,7 @@ public class Product extends BaseEntity implements StringsArray {
 
 	@OneToMany(mappedBy = "productId",
 			//fetch = FetchType.LAZY
-			cascade = CascadeType.ALL//, orphanRemoval = true
+			cascade = CascadeType.ALL, orphanRemoval = true
 	)
 //	@JoinColumn(
 //			name = "product_id"

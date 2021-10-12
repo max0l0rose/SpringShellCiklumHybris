@@ -10,9 +10,9 @@ import java.util.List;
 public interface ProdRepo extends //Repository<User, Long>
 									CrudRepository<Product, Long>
 {
-	List<Product> findByName(String name);
+	Product findByName(String name);
 
-	//List<Product> findByOrdersId(long orderId);
+	List<Product> findByOrderItems_OrderId(long oId);
 
 	//User findById(long id);
 

@@ -2,13 +2,11 @@ package com.company.services;
 
 import com.company.model.GeneralSequenceNumber;
 import com.company.model.Order1;
-import com.company.model.OrdersViewModel;
 import com.company.repo.GeneralSequenceNumberRepo;
 import com.company.repo.OrdersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -74,8 +72,8 @@ public class OrdersService implements MyService<Order1>{
 	}
 
 
-	public List<OrdersViewModel> getView() {
-		return null;// ordersRepo.getView();
-	}
+//	public Iterable<OrdersViewModel> getView() {
+//		return ordersRepo.getAllOrdersView();
+//	}
 
 }

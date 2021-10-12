@@ -20,8 +20,8 @@ public class ProductService implements MyService<Product>{
 	@Autowired
 	private ProdRepo prodRepository;
 
-	@Autowired
-	OrderItemsRepo orderItemsRepo;
+//	@Autowired
+//	OrderItemsRepo orderItemsRepo;
 
 ////	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 ////	static final String JDBC_DB_URL = "jdbc:mysql://localhost:3306/tutorialDb";

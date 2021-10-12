@@ -1,8 +1,9 @@
 package com.company.controller;
 
+import com.company.model.ProdStatus;
 import com.company.model.Product;
-import com.company.services.ProductService;
-import com.company.view.ProductsView;
+import com.company.repo.ProdRepo;
+import com.company.view.ProductsFindAllView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -19,35 +20,74 @@ public class ProductsController
 {
 	private final Map<String,Object> session = new HashMap<>();
 
+//	@Autowired
+//	private ProductService productService;
+
 	@Autowired
-	private ProductService productService;
+	private ProdRepo prodRepo;
 
 
-//	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
-//	public String commandProductsByOrderId(
-//			//@Size(min = 5, max = 40)
-//			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
-//					int oid
-//	)
-//	{
-//		Model model = new ExtendedModelMap();
-//
-//		Iterable<Product> users = productService.findByOrdersId(oid);
-//		model.addAttribute("list", users);
-//
-//		return ProductsView.render(model);
-//	}
+	@ShellMethod(key = {"addProduct", "addp", "ap"}, value = "Add/Create product..")
+	public String commandAddProduct(
+			//@Size(min = 5, max = 40)
+			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
+			String name,
+			@ShellOption(defaultValue = "0")
+			int price,
+			@ShellOption(defaultValue = "IN_STOCK")
+			String status
+	)
+	{
+		ProdStatus prodStatus;
+		try {
+			prodStatus = ProdStatus.valueOf(status);
+		} catch (IllegalArgumentException ex) {
+			int iStatus = Integer.valueOf(status);
+			prodStatus = ProdStatus.fromId(iStatus);
+		}
+
+		Model model = new ExtendedModelMap();
+
+		model.addAttribute("caption", "Add a Product:");
+
+		Product product = new Product(name, price, prodStatus);
+
+		model.addAttribute("body",
+				//name + ", proce = " + price + ", status" + status.toString()
+				product.toString()
+		);
+
+		prodRepo.save(product);
+
+		return ProductsFindAllView.render(model);
+	}
+
+
+    //TODO
+	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
+	public String commandProductsByOrderId(
+			//@Size(min = 5, max = 40)
+			@ShellOption(defaultValue = "0") //arity = 3, defaultValue = "deffffff",  help = "Possi"
+			int oid
+	)
+	{
+		if (oid == 0)
+			return commandProducts();
+
+		Model model = new ExtendedModelMap();
+
+		model.addAttribute("caption", "Products By Order Id:");
+
+		Iterable<Product> products = prodRepo.findByOrderItems_OrderId(oid);
+		model.addAttribute("list", products);
+
+		return ProductsFindAllView.render(model);
+	}
 
 
 
-	@ShellMethod(key = {"products", "prods", "ps"}, value = "Show all products.")
-	public String commandProducts (
-//			@Size(min = 5, max = 40)
-//			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
-//					String text,
-//			@ShellOption()
-//					String text2
-	) {
+	@ShellMethod(key = {"products", "prods", "ps", "pl"}, value = "Show all products.")
+	public String commandProducts () {
 //		List<User> ulist = new ArrayList<User>() {{
 //				add(new User("User1", new Department("Dep1"), Role.USER));
 //				add(new User("User2", new Department("Dep1"), Role.USER));
@@ -64,10 +104,12 @@ public class ProductsController
 		Model model = new ExtendedModelMap();
 		//Helper.getPage(model, session, userService, 0, "id", "");
 
-		Iterable<Product> users = productService.getAll();
-		model.addAttribute("list", users);
+		model.addAttribute("caption", "Products:");
 
-		return ProductsView.render(model);
+		Iterable<Product> products = prodRepo.findAll();
+		model.addAttribute("list", products);
+
+		return ProductsFindAllView.render(model);
 	}
 
 }
