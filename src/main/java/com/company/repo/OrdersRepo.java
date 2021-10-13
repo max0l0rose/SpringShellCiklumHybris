@@ -4,6 +4,8 @@ import com.company.model.Order1;
 import com.company.view.OrdersFindAllView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 //import org.springframework.data.repository.PagingAndSortingRepository;
 
 
@@ -20,7 +22,7 @@ public interface OrdersRepo extends
 			       "join o.orderItems oi \n" +
 			       "join Product p on p.id = oi.productId\n" +
 			       "group by o.id")
-	Iterable<OrdersFindAllView> getAllOrdersView();
+	List<OrdersFindAllView> getAllOrdersView();
 }
 
 

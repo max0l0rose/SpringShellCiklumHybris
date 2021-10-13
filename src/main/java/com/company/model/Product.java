@@ -53,7 +53,7 @@ public class Product extends BaseEntity
 //			name = "product_id"
 //	//		, referencedColumnName = "id"
 //	)
-//	@JoinTable(name = "order_items",
+//	@PrimaryKeyJoinColumn//	@JoinTable(name = "order_items",
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)

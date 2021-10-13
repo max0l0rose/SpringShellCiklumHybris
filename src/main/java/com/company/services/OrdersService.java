@@ -4,12 +4,15 @@ import com.company.model.GeneralSequenceNumber;
 import com.company.model.Order1;
 import com.company.repo.GeneralSequenceNumberRepo;
 import com.company.repo.OrdersRepo;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
+//@Getter
 public class OrdersService implements MyService<Order1>{
 
 
@@ -40,12 +43,7 @@ public class OrdersService implements MyService<Order1>{
 //	}
 
 
-	public Order1 save(Order1 order) {
-		genSeqNumRepo.deleteAll();
-		GeneralSequenceNumber number2 = new GeneralSequenceNumber();
-		//number2.setVal(number.getVal() + 1);
-		genSeqNumRepo.save(number2);
-
+//	public Order1 save(Order1 order) {
 //		//GeneralSequenceNumber number = getNextUserId();
 //		List<GeneralSequenceNumber> seqList = genSeqNumRepo.findAll();
 //		//GeneralSequenceNumber number = seqList.size()>0 ? (GeneralSequenceNumber)seqList.get(0) : new GeneralSequenceNumber();//findFirstByOrderByVal();
@@ -54,17 +52,33 @@ public class OrdersService implements MyService<Order1>{
 //			genSeqNumRepo.save(num);
 //			return num;
 //		});//findFirstByOrderByVal();
-		order.setUserId(number2.getUId());
-		//boolean contains = entityManager.contains(number);
+//
+//		order.setUserId(number.getUId());
+//
+//		genSeqNumRepo.deleteAll();
+//		genSeqNumRepo.flush();
+//
+//		GeneralSequenceNumber number2 = new GeneralSequenceNumber();
+//		//number2.setUId(number.getUId() + 1);
+//		genSeqNumRepo.save(number2);
+//
+//
+////		//GeneralSequenceNumber number3 = genSeqNumRepo.findFirstByOrderByVal(); // getNextUserId();
+////		//boolean contains2 = entityManager.contains(number);
+//
+//		return ordersRepo.save(order);
+//	}
 
 
-
-//		//GeneralSequenceNumber number3 = genSeqNumRepo.findFirstByOrderByVal(); // getNextUserId();
-//		//boolean contains2 = entityManager.contains(number);
+	public Order1 save(Order1 order) {
+		genSeqNumRepo.deleteAll();
+		GeneralSequenceNumber number = new GeneralSequenceNumber();
+		GeneralSequenceNumber numberAttached = genSeqNumRepo.save(number); // !!!!! numberAttached
+		//genSeqNumRepo.flush();
+		order.setUserId(numberAttached.getUId());
 
 		return ordersRepo.save(order);
 	}
-
 
 
 	public void delete(long id) {

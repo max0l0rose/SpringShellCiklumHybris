@@ -102,7 +102,7 @@ public class OrdersController {
 
 		model.addAttribute("caption", "Orders:");
 
-		Iterable<OrdersFindAllView> items = ordersRepo.getAllOrdersView();
+		List<OrdersFindAllView> items = ordersRepo.getAllOrdersView();
 		model.addAttribute("list", items);
 
 		return OrdersFindAllView.render(model);

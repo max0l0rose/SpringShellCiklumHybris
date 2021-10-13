@@ -32,7 +32,6 @@ public class OrderItems
 //	@Column(name = "product_id"
 ////			, insertable = false, updatable = false
 //	)
-	@Id
 	private long productId;
 
 //	@Column(name = "order_id"

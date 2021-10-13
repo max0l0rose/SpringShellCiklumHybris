@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -38,7 +39,7 @@ public class Main {
 	@Bean
 	@Transactional(
 			//propagation = Propagation.REQUIRED,
-			//isolation = Isolation.READ_UNCOMMITTED
+			isolation = Isolation.READ_UNCOMMITTED
 	)
 	public boolean demo1(ProdRepo prodRepo,
 	                     OrdersService ordersService
@@ -58,6 +59,8 @@ public class Main {
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
 		ordersService.save(order);
 
+		//ordersService.getOrdersRepo().flush();
+
 		Product prod1 = new Product("Prod2", 100, ProdStatus.IN_STOCK);
 		prodRepo.save(prod1);
 
@@ -70,6 +73,7 @@ public class Main {
 		ordersService.save(order2);
 
 		ordersService.save(new Order1());
+		//ordersService.getOrdersRepo().flush();
 
 		OrderItems orderItems21 = new OrderItems(prod2.getId(), order2.getId(), 50);
 		entityManager.persist(orderItems21);
