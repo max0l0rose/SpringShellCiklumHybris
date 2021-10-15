@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -41,19 +43,19 @@ public class Order1 extends BaseEntity
 
 
 
-	@OneToMany(//mappedBy = "orderId",
+	@OneToMany(mappedBy = "order",
 			//fetch = FetchType.LAZY
-			cascade = CascadeType.ALL, orphanRemoval = true
+			cascade = CascadeType.ALL//, orphanRemoval = true
 	)
-	@JoinColumn(
-			name = "order_id"
-			//, referencedColumnName = "id"
-	)
+//	@JoinColumn(
+//			name = "order_id"
+//			//, referencedColumnName = "id"
+//	)
 //	@JoinTable(name = "order_items",
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)
-	private List<OrderItems> orderItems;
+	private Set<OrderItems> orderItems = new HashSet<>();
 
 
 //	@ManyToMany(//mappedBy = "orders"
@@ -82,6 +84,12 @@ public class Order1 extends BaseEntity
 				       ", created=" + created +
 				       ", modified=" + modified +
 				       '}';
+	}
+
+
+
+	public void addProduct(Product product, int quantity) {
+		orderItems.add(new OrderItems(product, this, quantity));
 	}
 
 }

@@ -4,6 +4,7 @@ import com.company.model.Order1;
 import com.company.model.OrderItems;
 import com.company.model.ProdStatus;
 import com.company.model.Product;
+import com.company.repo.OrdersRepo;
 import com.company.repo.ProdRepo;
 import com.company.services.OrdersService;
 import org.slf4j.Logger;
@@ -39,53 +40,48 @@ public class Main {
 	@Bean
 	@Transactional(
 			//propagation = Propagation.REQUIRED,
-			isolation = Isolation.READ_UNCOMMITTED
+			//isolation = Isolation.READ_UNCOMMITTED
 	)
 	public boolean demo1(ProdRepo prodRepo,
-	                     OrdersService ordersService
-			, EntityManager entityManager
+	                     OrdersRepo ordersRepo
+			//, EntityManager entityManager
 	) {
 		//return (args) ->
 		//{
 		log.info("demo1: ");
 
+		//ordersService.getOrdersRepo().flush();
+
+		Product prod1 = new Product("Prod1", 100, ProdStatus.IN_STOCK);
+		prodRepo.save(prod1);
+		Product prod2 = new Product("Prod2", 200, ProdStatus.IN_STOCK);
 		prodRepo.save(prod2);
 
-//        GeneralSequenceNumber n = new GeneralSequenceNumber();
-//        entityManager.persist(n);
-////        GeneralSequenceNumber n2 = new GeneralSequenceNumber();
-////        entityManager.persist(n2);
-
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
-		ordersService.save(order);
-
-		//ordersService.getOrdersRepo().flush();
-
-		Product prod1 = new Product("Prod2", 100, ProdStatus.IN_STOCK);
-		prodRepo.save(prod1);
-
-		OrderItems orderItems = new OrderItems(prod1.getId(), order.getId(), 10);
-		entityManager.persist(orderItems);
-		OrderItems orderItems2 = new OrderItems(prod2.getId(), order.getId(), 20);
-		entityManager.persist(orderItems2);
-
+		//ordersRepo.save(order);
 		Order1 order2 = new Order1(ProdStatus.IN_STOCK);
-		ordersService.save(order2);
+		//ordersRepo.save(order2);
 
-		ordersService.save(new Order1());
+		order.addProduct(prod1, 10);
+		order.addProduct(prod2, 20);
+
+		order2.addProduct(prod2, 50);
+
+//		OrderItems orderItems = new OrderItems(prod1, order, 10);
+//		entityManager.persist(orderItems);
+//		OrderItems orderItems2 = new OrderItems(prod2, order, 20);
+//		entityManager.persist(orderItems2);
+
+		ordersRepo.save(new Order1());
 		//ordersService.getOrdersRepo().flush();
 
-		OrderItems orderItems21 = new OrderItems(prod2.getId(), order2.getId(), 50);
-		entityManager.persist(orderItems21);
-
-		ordersService.save(new Order1());
+//		OrderItems orderItems21 = new OrderItems(prod2, order2, 50);
+//		entityManager.persist(orderItems21);
 
 		log.info("demo1: Ok");
 		return true;
 	}
 
-
-	Product prod2 = new Product("Prod1", 200, ProdStatus.IN_STOCK);
 
 	//CommandLineRunner
 	@Bean

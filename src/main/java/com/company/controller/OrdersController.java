@@ -63,8 +63,8 @@ public class OrdersController {
 			String sQ = matcher.group(2);
 			long productId = Long.valueOf(sId);
 			int quantity = Integer.valueOf(sQ);
-			OrderItems orderItems = new OrderItems(productId, order.getId(), quantity);
-			orderItemsRepo.save(orderItems);
+//			OrderItems orderItems = new OrderItems(productId, order.getId(), quantity);
+//			orderItemsRepo.save(orderItems);
 
 			Product product = prodRepo.findById(productId).get();//.orElseThrow( () -> new IllegalArgumentException() );
 			productList.add(product);

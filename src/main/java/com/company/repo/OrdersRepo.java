@@ -17,10 +17,10 @@ public interface OrdersRepo extends
 	//List<OrdersView> findById(String uname);
 	//Department findById(long id);
 
-	@Query("select o as order, o.orderItems.size as prodsCount, SUM (p.price) as prodsTotalPrice \n" +
-			       "from Order1 o\n" +
-			       "join o.orderItems oi \n" +
-			       "join Product p on p.id = oi.productId\n" +
+	@Query("select o as order, size(o.orderItems) as prodsCount, SUM (p.price) as prodsTotalPrice " +
+			       "from Order1 o " +
+			       "join o.orderItems oi " +
+			       "join oi.product p " +
 			       "group by o.id")
 	List<OrdersFindAllView> getAllOrdersView();
 }

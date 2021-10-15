@@ -28,17 +28,17 @@ public class OrderItems
 		//extends BaseEntity
 {
 	//public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
-
-//	@Column(name = "product_id"
-////			, insertable = false, updatable = false
-//	)
-	private long productId;
-
-//	@Column(name = "order_id"
-////			, insertable = false, updatable = false
-//	)
-	@Id
-	private long orderId;
+//
+////	@Column(name = "product_id"
+//////			, insertable = false, updatable = false
+////	)
+//	private long productId;
+//
+////	@Column(name = "order_id"
+//////			, insertable = false, updatable = false
+////	)
+//	@Id
+//	private long orderId;
 
 
 //	public OrderItems(Product product, Order1 order, int quantity) {
@@ -48,39 +48,39 @@ public class OrderItems
 //	}
 
 
-//	//@Access(AccessType.PROPERTY)
-//	@ManyToOne
-//	//@JoinColumn(name = "product", referencedColumnName = "id", nullable = false)
-//	@Id
-//	private Product product;
+	//@Access(AccessType.PROPERTY)
+	@ManyToOne
+	//@JoinColumn(name = "product", referencedColumnName = "id", nullable = false)
+	@Id
+	private Product product;
+
+//	public Product getProduct() {
+//		return product;
+//	}
 //
-////	public Product getProduct() {
-////		return product;
-////	}
-////
-////	public void setProduct(Product product) {
-////		this.product = product;
-////	}
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
+
+
+	//@Access(AccessType.PROPERTY)
+	@ManyToOne
+	//@JoinColumn(name = "order1", referencedColumnName = "id", nullable = false)
+	@Id
+	private Order1 order;
+
+//	public Order1 getOrder() {
+//		return order;
+//	}
 //
-//
-//	//@Access(AccessType.PROPERTY)
-//	@ManyToOne
-//	//@JoinColumn(name = "order1", referencedColumnName = "id", nullable = false)
-//	@Id
-//	private Order1 order;
-//
-////	public Order1 getOrder() {
-////		return order;
-////	}
-////
-////	public void setOrder(Order1 order) {
-////		this.order = order;
-////	}
+//	public void setOrder(Order1 order) {
+//		this.order = order;
+//	}
 
 
 
-	@Basic
-	//@Column(name = "quantity")
+	//@Basic
+	//@Column(nullable = true)
 	private int quantity;
 
 

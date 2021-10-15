@@ -9,11 +9,11 @@ import java.util.Objects;
 //@Setter
 public class OrderProductPK implements Serializable {
 //	@Access(AccessType.FIELD)
-	@Column(name = "order_id"
-			//		, insertable = false, updatable = false
-	)
-	@Id
-	private long orderId;
+//	@Column(name = "order_id"
+//			//		, insertable = false, updatable = false
+//	)
+//	@Id
+	private long order;
 
 //	public Order1 getOrder() {
 //		return order;
@@ -23,12 +23,12 @@ public class OrderProductPK implements Serializable {
 //		this.order = orderId;
 //	}
 
-
-	@Column(name = "product_id"
-			//		, insertable = false, updatable = false
-	)
-	@Id
-	private long productId;
+//
+//	@Column(name = "product_id"
+//			//		, insertable = false, updatable = false
+//	)
+//	@Id
+	private long product;
 
 //	public Product getProduct() {
 //		return product;
@@ -45,11 +45,11 @@ public class OrderProductPK implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		OrderProductPK that = (OrderProductPK) o;
-		return productId == that.productId && orderId == that.orderId;
+		return product == that.product && order == that.order;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productId, orderId);
+		return Objects.hash(product, order);
 	}
 }
