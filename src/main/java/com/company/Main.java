@@ -42,8 +42,8 @@ public class Main {
 			//propagation = Propagation.REQUIRED,
 			//isolation = Isolation.READ_UNCOMMITTED
 	)
-	public boolean demo1(ProdRepo prodRepo,
-	                     OrdersRepo ordersRepo
+	public boolean demo1(//ProdRepo prodRepo,
+	                     OrdersService ordersService
 			//, EntityManager entityManager
 	) {
 		//return (args) ->
@@ -53,9 +53,9 @@ public class Main {
 		//ordersService.getOrdersRepo().flush();
 
 		Product prod1 = new Product("Prod1", 100, ProdStatus.IN_STOCK);
-		prodRepo.save(prod1);
+		//prodRepo.save(prod1);
 		Product prod2 = new Product("Prod2", 200, ProdStatus.IN_STOCK);
-		prodRepo.save(prod2);
+		//prodRepo.save(prod2);
 
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
 		//ordersRepo.save(order);
@@ -64,15 +64,15 @@ public class Main {
 
 		order.addProduct(prod1, 10);
 		order.addProduct(prod2, 20);
-
+		ordersService.save(order);
 		order2.addProduct(prod2, 50);
-
+		ordersService.save(order2);
 //		OrderItems orderItems = new OrderItems(prod1, order, 10);
 //		entityManager.persist(orderItems);
 //		OrderItems orderItems2 = new OrderItems(prod2, order, 20);
 //		entityManager.persist(orderItems2);
 
-		ordersRepo.save(new Order1());
+		ordersService.save(new Order1());
 		//ordersService.getOrdersRepo().flush();
 
 //		OrderItems orderItems21 = new OrderItems(prod2, order2, 50);
@@ -100,7 +100,7 @@ public class Main {
 //        join Product p on p.id = ps.product_id
 //        group by o.id
 
-		prodRepo.deleteById(1L);
+		//prodRepo.deleteById(1L);
 
 		log.info("demo2: Ok");
 		//};

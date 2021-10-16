@@ -7,6 +7,7 @@ import com.company.model.Product;
 import com.company.repo.OrderItemsRepo;
 import com.company.repo.OrdersRepo;
 import com.company.repo.ProdRepo;
+import com.company.services.OrdersService;
 import com.company.services.ProductService;
 import com.company.view.OrdersFindAllView;
 import com.company.view.ProductsFindAllView;
@@ -29,7 +30,7 @@ public class OrdersController {
 	private final Map<String,Object> session = new HashMap<>();
 
 	@Autowired
-	private OrdersRepo ordersRepo;
+	private OrdersService ordersService;
 
 	@Autowired
 	OrderItemsRepo orderItemsRepo;
@@ -44,7 +45,7 @@ public class OrdersController {
 	@ShellMethod(key = {"addOrder", "addo", "ao"}, value = "Add an order with array of product ids...")
 	public String commandAddOrder(
 //			@Size(min = 5, max = 40)
-			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
+			@ShellOption(defaultValue = "") //arity = 3, defaultValue = "deffffff",  help = "Possi"
 					String idsAndQuantity
 //			@ShellOption()
 //					String text2
@@ -52,10 +53,11 @@ public class OrdersController {
 		Pattern sIdsAndQuantityArrPattern = Pattern.compile("(\\d+)[-\\s]+(\\d+)"); // example: "1-10 2-20 3 30, 4-40 fghfgh 5 ----  50"
 		Matcher matcher = sIdsAndQuantityArrPattern.matcher(idsAndQuantity);
 
-		List<Product> productList = new ArrayList<>();
+		//ist<Product> productList = new ArrayList<>();
 
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
-		ordersRepo.save(order);
+		ordersService.save(order);
+
 
 		while(matcher.find()) //for(String sIdAndQ : sIdsAndQuantity)
 		{
@@ -67,7 +69,7 @@ public class OrdersController {
 //			orderItemsRepo.save(orderItems);
 
 			Product product = prodRepo.findById(productId).get();//.orElseThrow( () -> new IllegalArgumentException() );
-			productList.add(product);
+			order.addProduct(product, quantity);
 		}
 
 //		return commandOrders();
@@ -75,14 +77,19 @@ public class OrdersController {
 		Model model = new ExtendedModelMap();
 		//Helper.getPage(model, session, ordersService, 0, "id", "");
 
-		model.addAttribute("caption", "Add Order:");
+		model.addAttribute("caption", "Added a new order " + order.getId());
 
-		model.addAttribute("body",
-				//name + ", proce = " + price + ", status" + status.toString()
-				"added the following products"
-		);
+//		model.addAttribute("body",
+//				//name + ", proce = " + price + ", status" + status.toString()
+//				"Orders products:"
+//		);
 
-		return ProductsFindAllView.render(model);
+		ProductsFindAllView.render(model);
+
+//		Iterable<Product> products = prodRepo.findAll();
+//		model.addAttribute("list", order.getOrderItems());
+
+		return ProductsController.commandProductsByOrderId(order.getId());
 	}
 
 
@@ -102,7 +109,7 @@ public class OrdersController {
 
 		model.addAttribute("caption", "Orders:");
 
-		List<OrdersFindAllView> items = ordersRepo.getAllOrdersView();
+		List<OrdersFindAllView> items = ordersService.getOrdersRepo().getAllOrdersView();
 		model.addAttribute("list", items);
 
 		return OrdersFindAllView.render(model);

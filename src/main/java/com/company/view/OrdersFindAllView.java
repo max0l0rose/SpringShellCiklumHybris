@@ -10,7 +10,7 @@ public interface OrdersFindAllView extends IView
 
 	Order1 getOrder();
 	int getProdsCount();
-	int getProdsTotalPrice();
+	Integer getProdsTotalPrice();
 
 	default String[] toStringsArray() {
 		Order1 order = getOrder();

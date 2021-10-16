@@ -19,8 +19,8 @@ public interface OrdersRepo extends
 
 	@Query("select o as order, size(o.orderItems) as prodsCount, SUM (p.price) as prodsTotalPrice " +
 			       "from Order1 o " +
-			       "join o.orderItems oi " +
-			       "join oi.product p " +
+			       "left join o.orderItems oi " +
+			       "left join oi.product p " +
 			       "group by o.id")
 	List<OrdersFindAllView> getAllOrdersView();
 }

@@ -18,17 +18,20 @@ import java.util.Map;
 public class ProductsController
 		//extends SecuredCommand
 {
-	private final Map<String,Object> session = new HashMap<>();
+	//private final Map<String,Object> session = new HashMap<>();
 
 //	@Autowired
 //	private ProductService productService;
 
-	@Autowired
-	private ProdRepo prodRepo;
+	//@Autowired
+	private static ProdRepo prodRepo;
 
+	public ProductsController(ProdRepo pRepo) {
+		prodRepo = pRepo;
+	}
 
 	@ShellMethod(key = {"addProduct", "addp", "ap"}, value = "Add/Create product..")
-	public String commandAddProduct(
+	public static String commandAddProduct(
 			//@Size(min = 5, max = 40)
 			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
 			String name,
@@ -65,10 +68,10 @@ public class ProductsController
 
     //TODO
 	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
-	public String commandProductsByOrderId(
+	public static String commandProductsByOrderId(
 			//@Size(min = 5, max = 40)
 			@ShellOption(defaultValue = "0") //arity = 3, defaultValue = "deffffff",  help = "Possi"
-			int oid
+			long oid
 	)
 	{
 		if (oid == 0)
@@ -76,7 +79,7 @@ public class ProductsController
 
 		Model model = new ExtendedModelMap();
 
-		model.addAttribute("caption", "Products By Order Id:");
+		model.addAttribute("caption", "Products of Order: " + oid);
 
 		Iterable<Product> products = prodRepo.findByOrderItems_OrderId(oid);
 		model.addAttribute("list", products);
@@ -87,7 +90,7 @@ public class ProductsController
 
 
 	@ShellMethod(key = {"products", "prods", "ps", "pl"}, value = "Show all products.")
-	public String commandProducts () {
+	public static String commandProducts () {
 //		List<User> ulist = new ArrayList<User>() {{
 //				add(new User("User1", new Department("Dep1"), Role.USER));
 //				add(new User("User2", new Department("Dep1"), Role.USER));

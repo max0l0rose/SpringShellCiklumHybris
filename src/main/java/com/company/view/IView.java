@@ -14,7 +14,8 @@ public interface IView extends StringsArray {
 		String caption = (String) model.getAttribute("caption");
 		System.out.println(caption);
 		String body = (String) model.getAttribute("body");
-		System.out.println(body);
+		if (body != null)
+			System.out.println(body);
 
 		Iterable<StringsArray> items = (Iterable)model.getAttribute("list");
 		if (items == null)

@@ -1,8 +1,6 @@
 package com.company.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,11 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 //@AllArgsConstructor
 @NoArgsConstructor
-//@Getter
-//@Setter
 @SequenceGenerator(name = "sequenceGen", sequenceName = "seqProduct", allocationSize = 1, initialValue = 1)
 @Table(
 //		name = "Products"

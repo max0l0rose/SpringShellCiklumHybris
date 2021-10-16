@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-//@Getter
+@Getter
 public class OrdersService implements MyService<Order1>{
 
 
