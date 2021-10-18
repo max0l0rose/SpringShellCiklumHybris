@@ -6,7 +6,6 @@ import com.company.model.ProdStatus;
 import com.company.model.Product;
 import com.company.repo.OrdersRepo;
 import com.company.repo.ProdRepo;
-import com.company.services.OrdersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -43,7 +42,7 @@ public class Main {
 			//isolation = Isolation.READ_UNCOMMITTED
 	)
 	public boolean demo1(//ProdRepo prodRepo,
-	                     OrdersService ordersService
+	                     OrdersRepo ordersRepo
 			//, EntityManager entityManager
 	) {
 		//return (args) ->
@@ -53,9 +52,7 @@ public class Main {
 		//ordersService.getOrdersRepo().flush();
 
 		Product prod1 = new Product("Prod1", 100, ProdStatus.IN_STOCK);
-		//prodRepo.save(prod1);
 		Product prod2 = new Product("Prod2", 200, ProdStatus.IN_STOCK);
-		//prodRepo.save(prod2);
 
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
 		//ordersRepo.save(order);
@@ -64,15 +61,15 @@ public class Main {
 
 		order.addProduct(prod1, 10);
 		order.addProduct(prod2, 20);
-		ordersService.save(order);
+		ordersRepo.save(order);
 		order2.addProduct(prod2, 50);
-		ordersService.save(order2);
+		ordersRepo.save(order2);
 //		OrderItems orderItems = new OrderItems(prod1, order, 10);
 //		entityManager.persist(orderItems);
 //		OrderItems orderItems2 = new OrderItems(prod2, order, 20);
 //		entityManager.persist(orderItems2);
 
-		ordersService.save(new Order1());
+		ordersRepo.save(new Order1());
 		//ordersService.getOrdersRepo().flush();
 
 //		OrderItems orderItems21 = new OrderItems(prod2, order2, 50);
@@ -86,8 +83,8 @@ public class Main {
 	//CommandLineRunner
 	@Bean
 	@Transactional
-	public boolean demo2(ProdRepo prodRepo,
-	                     OrdersService ordersService
+	public boolean demo2(ProdRepo prodRepo
+	                     //OrdersService ordersService
 			, EntityManager entityManager
 	) {
 		//return (args) ->

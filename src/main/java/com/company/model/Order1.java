@@ -10,8 +10,7 @@ import java.util.Set;
 
 @Entity
 //@Data
-//@AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Getter
 @Setter
 @SequenceGenerator(name = "sequenceGen", sequenceName = "seqDepart", allocationSize = 1)
@@ -29,13 +28,20 @@ public class Order1 extends BaseEntity
 {
 	public final static String[][] headers = {{"Id", "user_id", "Status", "Created", "Modified" },};
 
+	@OneToOne
 	//@GeneratedValue//(strategy = GenerationType.IDENTITY)
-	private long userId;
+	@JoinColumn(referencedColumnName = "id")
+	private Order1 user;
 
 	ProdStatus status = ProdStatus.IN_STOCK;
 
 
+	public Order1() {
+		this.user = this;
+	}
+
 	public Order1(ProdStatus status) {
+		this();
 		this.status = status;
 	}
 
@@ -68,7 +74,7 @@ public class Order1 extends BaseEntity
 
 
 	public String[] toStringsArray() {
-		return new String[] {String.valueOf(id), String.valueOf(userId), String.valueOf(status),
+		return new String[] {String.valueOf(id), String.valueOf(user.getId()), String.valueOf(status),
 				String.valueOf(created), String.valueOf(modified)};
 	}
 
@@ -77,7 +83,7 @@ public class Order1 extends BaseEntity
 	public String toString() {
 		return "Order{"
 				       + id +
-				       ", user_id=" + userId +
+				       ", user_id=" + user.getId() +
 				       ", status=" + status +
 				       ", created=" + created +
 				       ", modified=" + modified +

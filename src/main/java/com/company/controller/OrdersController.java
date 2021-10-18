@@ -1,13 +1,11 @@
 package com.company.controller;
 
 import com.company.model.Order1;
-import com.company.model.OrderItems;
 import com.company.model.ProdStatus;
 import com.company.model.Product;
 import com.company.repo.OrderItemsRepo;
 import com.company.repo.OrdersRepo;
 import com.company.repo.ProdRepo;
-import com.company.services.OrdersService;
 import com.company.services.ProductService;
 import com.company.view.OrdersFindAllView;
 import com.company.view.ProductsFindAllView;
@@ -18,7 +16,6 @@ import org.springframework.shell.standard.ShellOption;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +27,7 @@ public class OrdersController {
 	private final Map<String,Object> session = new HashMap<>();
 
 	@Autowired
-	private OrdersService ordersService;
+	private OrdersRepo ordersRepo;
 
 	@Autowired
 	OrderItemsRepo orderItemsRepo;
@@ -56,7 +53,7 @@ public class OrdersController {
 		//ist<Product> productList = new ArrayList<>();
 
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
-		ordersService.save(order);
+		ordersRepo.save(order);
 
 
 		while(matcher.find()) //for(String sIdAndQ : sIdsAndQuantity)
@@ -109,7 +106,7 @@ public class OrdersController {
 
 		model.addAttribute("caption", "Orders:");
 
-		List<OrdersFindAllView> items = ordersService.getOrdersRepo().getAllOrdersView();
+		List<OrdersFindAllView> items = ordersRepo.getAllOrdersView();
 		model.addAttribute("list", items);
 
 		return OrdersFindAllView.render(model);

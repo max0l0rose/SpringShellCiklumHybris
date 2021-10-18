@@ -15,7 +15,7 @@ public interface OrdersFindAllView extends IView
 	default String[] toStringsArray() {
 		Order1 order = getOrder();
 		return new String[] {
-				String.valueOf(order.getId()), String.valueOf(order.getUserId()),
+				String.valueOf(order.getId()), String.valueOf(order.getUser()),
 				String.valueOf(order.getStatus()),
 				String.valueOf(getProdsCount()),
 				String.valueOf(getProdsTotalPrice()),
