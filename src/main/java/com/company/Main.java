@@ -51,8 +51,8 @@ public class Main {
 
 		//ordersService.getOrdersRepo().flush();
 
-		Product prod1 = new Product("Prod1", 100, ProdStatus.IN_STOCK);
-		Product prod2 = new Product("Prod2", 200, ProdStatus.IN_STOCK);
+		Product prod1 = new Product("ProdA", 100, ProdStatus.IN_STOCK);
+		Product prod2 = new Product("ProdB", 200, ProdStatus.IN_STOCK);
 
 		Order1 order = new Order1(ProdStatus.IN_STOCK);
 		//ordersRepo.save(order);
@@ -61,6 +61,7 @@ public class Main {
 
 		order.addProduct(prod1, 10);
 		order.addProduct(prod2, 20);
+		order.addProduct(new Product("ProdC", 30, ProdStatus.RUNNING_LOW), 33);
 		ordersRepo.save(order);
 		order2.addProduct(prod2, 50);
 		ordersRepo.save(order2);

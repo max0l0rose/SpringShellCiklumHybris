@@ -17,7 +17,8 @@ public interface OrdersRepo extends
 	//List<OrdersView> findById(String uname);
 	//Department findById(long id);
 
-	@Query("select o as order, size(o.orderItems) as prodsCount, SUM (p.price) as prodsTotalPrice " +
+	@Query("select o as order, size(o.orderItems) as prodsCount, SUM (p.price) as prodsTotalPrice, " +
+			                            "SUM (oi.quantity) as prodsTotalQuantity " +
 			       "from Order1 o " +
 			       "left join o.orderItems oi " +
 			       "left join oi.product p " +

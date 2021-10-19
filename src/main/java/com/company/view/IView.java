@@ -10,16 +10,22 @@ import java.util.stream.StreamSupport;
 
 public interface IView extends StringsArray {
 
+//	default String[][] getHeaders() {
+//		return null;
+//	}
+
 	static String render(Model model) {
-		String caption = (String) model.getAttribute("caption");
-		System.out.println(caption);
+
+		String result= (String) model.getAttribute("caption") + System.lineSeparator();
+		//System.out.println(caption);
+
 		String body = (String) model.getAttribute("body");
 		if (body != null)
-			System.out.println(body);
+			result += body + System.lineSeparator(); //System.out.println(body);
 
 		Iterable<StringsArray> items = (Iterable)model.getAttribute("list");
 		if (items == null)
-			return null;
+			return result;
 
 		String[][] headers = (String[][])model.getAttribute("headers");
 //				.forEach(q -> {
@@ -38,12 +44,12 @@ public interface IView extends StringsArray {
 
 		TableModel tableModel = new ArrayTableModel(headersAndData);
 		TableBuilder tableBuilder = new TableBuilder(tableModel);
-		tableBuilder.addInnerBorder(BorderStyle.fancy_light).addHeaderBorder(BorderStyle.fancy_double)
-				.on(CellMatchers.column(0)).addWrapper(new KeyValueTextWrapper()).addSizer(new AbsoluteWidthSizeConstraints(20))
-				.on(CellMatchers.column(1)).addSizer(new AbsoluteWidthSizeConstraints(30));
+		tableBuilder.addInnerBorder(BorderStyle.fancy_light).addHeaderBorder(BorderStyle.fancy_double);
+				//.on(CellMatchers.column(0)).addWrapper(new KeyValueTextWrapper()).addSizer(new AbsoluteWidthSizeConstraints(20))
+				//.on(CellMatchers.column(1)).addSizer(new AbsoluteWidthSizeConstraints(30));
 				//.on(CellMatchers.column(2)).addSizer(new AbsoluteWidthSizeConstraints(50));
 		//tableBuilder.on(CellMatchers.ofType(LocalDate.class)).addFormatter(dateFormatter);
 
-		return tableBuilder.build().render(80);
+		return result + tableBuilder.build().render(80);
 	}
 }

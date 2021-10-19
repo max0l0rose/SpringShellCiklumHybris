@@ -3,16 +3,14 @@ package com.company.controller;
 import com.company.model.ProdStatus;
 import com.company.model.Product;
 import com.company.repo.ProdRepo;
+import com.company.view.ProductsByOrderView;
 import com.company.view.ProductsFindAllView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ShellComponent()
 public class ProductsController
@@ -24,14 +22,14 @@ public class ProductsController
 //	private ProductService productService;
 
 	//@Autowired
-	private static ProdRepo prodRepo;
+	private ProdRepo prodRepo;
 
 	public ProductsController(ProdRepo pRepo) {
 		prodRepo = pRepo;
 	}
 
 	@ShellMethod(key = {"addProduct", "addp", "ap"}, value = "Add/Create product..")
-	public static String commandAddProduct(
+	public String commandAddProduct(
 			//@Size(min = 5, max = 40)
 			@ShellOption() //arity = 3, defaultValue = "deffffff",  help = "Possi"
 			String name,
@@ -68,7 +66,8 @@ public class ProductsController
 
     //TODO
 	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
-	public static String commandProductsByOrderId(
+	@Transactional()
+	public String commandProductsByOrderId(
 			//@Size(min = 5, max = 40)
 			@ShellOption(defaultValue = "0") //arity = 3, defaultValue = "deffffff",  help = "Possi"
 			long oid
@@ -81,16 +80,16 @@ public class ProductsController
 
 		model.addAttribute("caption", "Products of Order: " + oid);
 
-		Iterable<Product> products = prodRepo.findByOrderItems_OrderId(oid);
+		Iterable<ProductsByOrderView> products = prodRepo.findProductsByOrderId(oid);
 		model.addAttribute("list", products);
 
-		return ProductsFindAllView.render(model);
+		return ProductsByOrderView.render(model);
 	}
 
 
 
 	@ShellMethod(key = {"products", "prods", "ps", "pl"}, value = "Show all products.")
-	public static String commandProducts () {
+	public String commandProducts () {
 //		List<User> ulist = new ArrayList<User>() {{
 //				add(new User("User1", new Department("Dep1"), Role.USER));
 //				add(new User("User2", new Department("Dep1"), Role.USER));

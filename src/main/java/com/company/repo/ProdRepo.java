@@ -1,7 +1,9 @@
 package com.company.repo;
 
 import com.company.model.Product;
+import com.company.view.ProductsByOrderView;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -10,9 +12,12 @@ import java.util.List;
 public interface ProdRepo extends //Repository<User, Long>
 									CrudRepository<Product, Long>
 {
-	Product findByName(String name);
+	//Product findByName(String name);
 
-	List<Product> findByOrderItems_OrderId(long oId);
+	//List<Product> findByOrderItems_OrderId(long oId);
+
+	@Query("select p as product, oi.quantity as quantity from Product p join p.orderItems oi where oi.order.id = ?1")
+	List<ProductsByOrderView> findProductsByOrderId(long oId);
 
 	//User findById(long id);
 
