@@ -1,5 +1,6 @@
 package com.company.model;
 
+import com.company.utils.MySet;
 import lombok.*;
 
 import javax.persistence.*;
@@ -59,7 +60,7 @@ public class Order1 extends BaseEntity
 //			joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
 //			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")}
 //	)
-	private Set<OrderItems> orderItems = new HashSet<>();
+	private Set<OrderItems> orderItems = new MySet<>();
 
 
 //	@ManyToMany(//mappedBy = "orders"
@@ -93,7 +94,8 @@ public class Order1 extends BaseEntity
 
 
 	public void addProduct(Product product, int quantity) {
-		orderItems.add(new OrderItems(product, this, quantity));
+		OrderItems oi = new OrderItems(product, this, quantity);
+		orderItems.add(oi);
 	}
 
 }

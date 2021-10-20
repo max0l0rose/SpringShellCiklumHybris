@@ -5,13 +5,14 @@ import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Objects;
 
 //@Entity // ERROR
 //@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @MappedSuperclass
 public abstract class BaseEntity
-		implements StringsArray
+								implements StringsArray
 {
 
 	@Id
@@ -23,7 +24,8 @@ public abstract class BaseEntity
 //			sequenceName = "MY_ORACLE_SEQ_NAME",
 //			allocationSize = 1)
 
-	//@Column(name="ID")
+	//@Column(name="id")
+	//@Basic
 	long id;
 
 	@Column(columnDefinition = "integer default 0")
@@ -49,4 +51,31 @@ public abstract class BaseEntity
 
 //	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 //	OffsetDateTime created_offsetDT;
+
+
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o) return true;
+//String cname = getClass().getName(); // norm
+//	String oname = o.getClass().getName();
+	//		if (o == null || getClass() != o.getClass()) return false;
+//
+//		BaseEntity that = (BaseEntity) o;
+//
+//		//if (version != that.version) return false;
+//		if (!Objects.equals(id, that.id))
+//			return false;
+//		//if (created != null ? !created.equals(that.created) : that.created != null) return false;
+//		return true;//modified != null ? modified.equals(that.modified) : that.modified == null;
+//	}
+//
+	@Override
+	public int hashCode() {
+		//int result = id != null ? Objects.hashCode(id) : 0;
+		int result = (int)id;//Objects.hashCode(id);
+		//result = 31 * result + version;
+		//result = 31 * result + (created != null ? created.hashCode() : 0);
+		//result = 31 * result + (modified != null ? modified.hashCode() : 0);
+		return result;
+	}
 }

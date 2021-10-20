@@ -60,7 +60,10 @@ public class Main {
 		//ordersRepo.save(order2);
 
 		order.addProduct(prod1, 10);
+		order.addProduct(prod1, 11);
+
 		order.addProduct(prod2, 20);
+		order.addProduct(prod2, 22);
 		order.addProduct(new Product("ProdC", 30, ProdStatus.RUNNING_LOW), 33);
 		ordersRepo.save(order);
 		order2.addProduct(prod2, 50);

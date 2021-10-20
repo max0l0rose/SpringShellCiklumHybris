@@ -6,10 +6,10 @@ import com.company.model.Product;
 import com.company.repo.OrderItemsRepo;
 import com.company.repo.OrdersRepo;
 import com.company.repo.ProdRepo;
+import com.company.services.OrdersService;
 import com.company.services.ProductService;
 import com.company.view.IView;
 import com.company.view.OrdersFindAllView;
-import com.company.view.ProductsFindAllView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -32,6 +32,9 @@ public class OrdersController {
 	private OrdersRepo ordersRepo;
 
 	@Autowired
+	OrdersService ordersService;
+
+	@Autowired
 	OrderItemsRepo orderItemsRepo;
 
 	@Autowired
@@ -42,6 +45,75 @@ public class OrdersController {
 
 	@Autowired
 	ProductsController productsController;
+
+//	interface MyEntry extends Map.Entry<Long, Integer> {
+//	}
+
+	Map<Long, Integer> extractIdsAndQuantity(String idsAndQuantity)
+	{
+		Pattern sIdsAndQuantityArrPattern = Pattern.compile("(\\d+)[-\\s]*(\\d+)*"); // example: "1-10 2-20 3 30, 4-40 fghfgh 5 ----  50"
+		Matcher matcher = sIdsAndQuantityArrPattern.matcher(idsAndQuantity);
+
+		//ist<Product> productList = new ArrayList<>();
+
+		Order1 order = new Order1(ProdStatus.IN_STOCK);
+		ordersRepo.save(order);
+
+
+		Map<Long, Integer> map = new HashMap<>();
+
+		while(matcher.find()) //for(String sIdAndQ : sIdsAndQuantity)
+		{
+			String sId = matcher.group(1);
+			String sQ = matcher.group(2);
+			long productId = Long.valueOf(sId);
+			int quantity = Integer.valueOf(sQ);
+			map.put(productId, quantity);
+		}
+
+		return map;
+	}
+
+
+	@ShellMethod(key = {"addProdsToOrder", "addptoo", "apto"}, value = "Add existing products to existing order.")
+	@Transactional
+	public String commandAddProdsToExistingOrder(
+			long oId,
+//			@Size(min = 5, max = 40)
+			@ShellOption(defaultValue = "") //arity = 3, defaultValue = "deffffff",  help = "Possi"
+					String idsAndQuantity
+//			@ShellOption()
+//					String text2
+	) {
+		Order1 order = ordersRepo.findById(oId).get();
+
+		Map<Long, Integer> map = extractIdsAndQuantity(idsAndQuantity);
+
+		//Map.Entry<Long, Integer> entry
+		StringBuilder render = new StringBuilder();
+		map.forEach((productId, quantity) -> {
+			Product product = prodRepo.findById(productId).get();//.orElseThrow( () -> new IllegalArgumentException() );
+			order.addProduct(product, quantity);
+			render.append("productId=" + productId + ", quantity=" + quantity + "; ");
+		});
+
+		Model model = new ExtendedModelMap();
+		//Helper.getPage(model, session, ordersService, 0, "id", "");
+
+		model.addAttribute("caption", "Adding a new order " + order.getId());
+		model.addAttribute("body", render.toString());
+
+		String renderResult = IView.render(model);
+
+//		Iterable<Product> products = prodRepo.findAll();
+//		model.addAttribute("list", order.getOrderItems());
+
+		//order = null;
+		ordersService.detach(order);
+		return renderResult + productsController.commandProductsByOrderId(order.getId());
+	}
+
+
 
 	@ShellMethod(key = {"addOrder", "addo", "ao"}, value = "Add an order with array of product ids...")
 	@Transactional

@@ -13,7 +13,7 @@ import java.io.Serializable;
 ////		,allocationSize=1
 //)
 @Entity
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 //@Getter
@@ -112,6 +112,32 @@ public class OrderItems
 //				       '}';
 //	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+//		String cname = getClass().getName(); // norm
+//		String oname = o.getClass().getName();
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		OrderItems that = (OrderItems) o;
+
+		//if (quantity != that.quantity) return false;
+		if (!product.equals(that.product))
+			return false;
+		return order.equals(that.order);
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		int result = (int)product.id;
+		result = 31 * result + (int)order.id;
+		//result = 31 * result + quantity;
+		return result;
+	}
 }
 
 

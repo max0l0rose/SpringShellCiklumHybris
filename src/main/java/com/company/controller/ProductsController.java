@@ -8,6 +8,7 @@ import com.company.view.ProductsFindAllView;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class ProductsController
 	public ProductsController(ProdRepo pRepo) {
 		prodRepo = pRepo;
 	}
+
+
 
 	@ShellMethod(key = {"addProduct", "addp", "ap"}, value = "Add/Create product..")
 	public String commandAddProduct(
@@ -66,7 +69,7 @@ public class ProductsController
 
     //TODO
 	@ShellMethod(key = {"productsByOrderId", "prodsByOId", "pbo"}, value = "Show products by order id.")
-	@Transactional()
+	@Transactional
 	public String commandProductsByOrderId(
 			//@Size(min = 5, max = 40)
 			@ShellOption(defaultValue = "0") //arity = 3, defaultValue = "deffffff",  help = "Possi"
